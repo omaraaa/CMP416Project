@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <f:metadata xmlns:f="http://xmlns.jcp.org/jsf/core">
+        <f:viewAction action="#{user.checkLogin()}"/>
+    </f:metadata>
+
+    <h:head>
+        <title>Register7y</title>
+        <style>
+            .error {color:  red}
+        </style>
+        <h:outputScript library="js" name="jquery-3.3.1.js" />
+        <script>
+            $(function () {
+                $("#rf\\:register").on("click", function () {
+                    if ($("#rf\\:pass1").val() != $("#rf\\:pass2").val()) {
+                        alert("Passwords does not match");
+                        return false;
+                    }
+                    return true;
+                });
+            })
+        </script>
+    </h:head>
+    <h:body>
+        <div align="center">
+            <h:form id="rf">
+                <h:panelGrid columns="2">
+                    Username:
+                    <h:inputText  value="#{user.iusername}"/>
+                    Email:
+                    <h:inputText value="#{user.iemail}"/>         
+                    Password:
+                    <h:inputSecret id="pass1" value="#{user.ipass}"/>
+                    Retype Password:
+                    <h:inputSecret id="pass2"/>
+                </h:panelGrid>
+                <c:if test="#{user.failed}">
+                    <h:outputText value="Username already used" class="error"/><br/>
+                </c:if>
+                <c:if test="#{user.efailed}">
+                    <h:outputText value="Email already used" class="error"/><br/>
+                </c:if>
+                <h:commandButton id="register" value="Register" action="#{user.register()}"/>
+            </h:form>
+        </div>
+    </h:body>
+</html>
+

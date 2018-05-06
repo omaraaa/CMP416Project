@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="CMP416ProjectPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>db.Streams</class>
+    <class>db.Packages</class>
+    <class>db.Orders</class>
+    <class>db.Comments</class>
+    <class>db.Posts</class>
+    <class>db.Users</class>
+    <class>db.Textposts</class>
+    <class>db.Friends</class>
+    <class>db.Imageposts</class>
+    <class>db.Posts_1</class>
+    <class>db.Imageposts_1</class>
+    <class>db.Streams_1</class>
+    <class>db.Orders_1</class>
+    <class>db.Packages_1</class>
+    <class>db.Textposts_1</class>
+    <class>db.Comments_1</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/bottle"/>
+      <property name="javax.persistence.jdbc.user" value="bottle"/>
+      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
+      <property name="javax.persistence.jdbc.password" value="bottle"/>
+    </properties>
+  </persistence-unit>
+</persistence>

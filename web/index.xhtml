@@ -1,0 +1,200 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <f:metadata xmlns:f="http://xmlns.jcp.org/jsf/core">
+        <f:viewAction action="#{user.checkLogin()}"/>
+    </f:metadata>
+
+    <h:head>
+        <title>Bottle</title>
+        <h:outputScript library="js" name="jquery-3.3.1.js" />
+        <h:outputScript library="jquery-ui-1.12.1" name="jquery-ui.js"/>
+        <h:outputStylesheet library="jquery-ui-1.12.1" name="jquery-ui.css"/>
+        <script>
+            $(function () {
+                //$("#postdialog").dialog({width:'auto'});
+                //$("#postdialog2").dialog({width:'auto'});
+                //$(window).scroll(function () {
+                 //   $('#toph').css('top', $(this).scrollTop() + "px");
+                    
+                //});
+                $('#page').css('height', (window.innerHeight - $('#toph').innerHeight() - $('#toph').outerHeight())"" + 'px');
+            });
+
+        </script>
+        <style>
+            #page {
+                position: relative;
+                overflow-y: scroll;
+            }
+
+            #toph {
+                position: relative;
+                z-index: 1000;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <div id="toph" align="center" class="ui-widget-header">
+            <table>
+                <tr>
+                    <div id="post">
+                    </div>
+                </tr>
+                <tr>
+                    <h:form>
+                        <h:commandButton value="Logout" action="#{user.logout}"/>
+                        <h:commandButton value="Create a new post" action="createpost"/>
+                    </h:form>
+                </tr>
+            </table>
+        </div>
+        <div id="page">
+            <div  id="postdialog" title="Post Placeholder Title" >
+                <h1 class="ui-widget-header">Post Placeholder Title</h1>
+                <p class="ui-widget-content">Test Post Test Post Test Post Test<br/>
+                    Post Test Post Test Post Test Post Test Post<br/>
+                    Test Post Test Post Test Post Test Post<br/>
+                    Test Post Test Post<br/>
+                </p>
+                <input type="button" value="Favorite Post" id="fav"/>
+
+                <input type="button" value="Remove Post(-1)" id="rem"/>
+
+                <input type="button" value="Mutliply Post(-1)" id="multi"/>
+
+            </div>
+
+            
+            <div  id="postdialog" title="Post Placeholder Title" >
+                <h1 class="ui-widget-header">Post Placeholder Title</h1>
+                <p class="ui-widget-content">Test Post Test Post Test Post Test<br/>
+                    Post Test Post Test Post Test Post Test Post<br/>
+                    Test Post Test Post Test Post Test Post<br/>
+                    Test Post Test Post<br/>
+                </p>
+                <input type="button" value="Favorite Post" id="1"/>
+
+                <input type="button" value="Remove Post(-1)" id="1"/>
+
+                <input type="button" value="Mutliply Post(-1)" id="1"/>
+
+            </div>
+            <div  id="postdialog" title="Post Placeholder Title" >
+                <h1 class="ui-widget-header">Post Placeholder Title</h1>
+                <p class="ui-widget-content">Test Post Test Post Test Post Test<br/>
+                    Post Test Post Test Post Test Post Test Post<br/>
+                    Test Post Test Post Test Post Test Post<br/>
+                    Test Post Test Post<br/>
+                </p>
+                <input type="button" value="Favorite Post" id="fav"/>
+
+                <input type="button" value="Remove Post(-1)" id="rem"/>
+
+                <input type="button" value="Mutliply Post(-1)" id="multi"/>
+
+            </div>
+            <div  id="postdialog" title="Post Placeholder Title" >
+                <h1 class="ui-widget-header">Post Placeholder Title</h1>
+                <p class="ui-widget-content">Test Post Test Post Test Post Test<br/>
+                    Post Test Post Test Post Test Post Test Post<br/>
+                    Test Post Test Post Test Post Test Post<br/>
+                    Test Post Test Post<br/>
+                </p>
+                <input type="button" value="Favorite Post" id="fav"/>
+
+                <input type="button" value="Remove Post(-1)" id="rem"/>
+
+                <input type="button" value="Mutliply Post(-1)" id="multi"/>
+
+            </div>
+            <div  id="postdialog" title="Post Placeholder Title" >
+                <h1 class="ui-widget-header">Post Placeholder Title</h1>
+                <p class="ui-widget-content">Test Post Test Post Test Post Test<br/>
+                    Post Test Post Test Post Test Post Test Post<br/>
+                    Test Post Test Post Test Post Test Post<br/>
+                    Test Post Test Post<br/>
+                </p>
+                <input type="button" value="Favorite Post" id="fav"/>
+
+                <input type="button" value="Remove Post(-1)" id="rem"/>
+
+                <input type="button" value="Mutliply Post(-1)" id="multi"/>
+
+            </div>
+            <div  id="postdialog" title="Post Placeholder Title" >
+                <h1 class="ui-widget-header">Post Placeholder Title</h1>
+                <p class="ui-widget-content">Test Post Test Post Test Post Test<br/>
+                    Post Test Post Test Post Test Post Test Post<br/>
+                    Test Post Test Post Test Post Test Post<br/>
+                    Test Post Test Post<br/>
+                </p>
+                <input type="button" value="Favorite Post" id="fav"/>
+
+                <input type="button" value="Remove Post(-1)" id="rem"/>
+
+                <input type="button" value="Mutliply Post(-1)" id="multi"/>
+
+            </div>
+            <div  id="postdialog" title="Post Placeholder Title" >
+                <h1 class="ui-widget-header">Post Placeholder Title</h1>
+                <p class="ui-widget-content">Test Post Test Post Test Post Test<br/>
+                    Post Test Post Test Post Test Post Test Post<br/>
+                    Test Post Test Post Test Post Test Post<br/>
+                    Test Post Test Post<br/>
+                </p>
+                <input type="button" value="Favorite Post" id="fav"/>
+
+                <input type="button" value="Remove Post(-1)" id="rem"/>
+
+                <input type="button" value="Mutliply Post(-1)" id="multi"/>
+
+            </div>
+            <div  id="postdialog" title="Post Placeholder Title" >
+                <h1 class="ui-widget-header">Post Placeholder Title</h1>
+                <p class="ui-widget-content">Test Post Test Post Test Post Test<br/>
+                    Post Test Post Test Post Test Post Test Post<br/>
+                    Test Post Test Post Test Post Test Post<br/>
+                    Test Post Test Post<br/>
+                </p>
+                <input type="button" value="Favorite Post" id="fav"/>
+
+                <input type="button" value="Remove Post(-1)" id="rem"/>
+
+                <input type="button" value="Mutliply Post(-1)" id="multi"/>
+
+            </div>
+            <div  id="postdialog" title="Post Placeholder Title" >
+                <h1 class="ui-widget-header">Post Placeholder Title</h1>
+                <p class="ui-widget-content">Test Post Test Post Test Post Test<br/>
+                    Post Test Post Test Post Test Post Test Post<br/>
+                    Test Post Test Post Test Post Test Post<br/>
+                    Test Post Test Post<br/>
+                </p>
+                <input type="button" value="Favorite Post" id="fav"/>
+
+                <input type="button" value="Remove Post(-1)" id="rem"/>
+
+                <input type="button" value="Mutliply Post(-1)" id="multi"/>
+
+            </div>
+            <div  id="postdialog" title="Post Placeholder Title" >
+                <h1 class="ui-widget-header">Post Placeholder Title</h1>
+                <p class="ui-widget-content">Test Post Test Post Test Post Test<br/>
+                    Post Test Post Test Post Test Post Test Post<br/>
+                    Test Post Test Post Test Post Test Post<br/>
+                    Test Post Test Post<br/>
+                </p>
+                <input type="button" value="Favorite Post" id="fav"/>
+
+                <input type="button" value="Remove Post(-1)" id="rem"/>
+
+                <input type="button" value="Mutliply Post(-1)" id="multi"/>
+
+            </div>
+        </div>
+    </h:body>
+</html>
+
