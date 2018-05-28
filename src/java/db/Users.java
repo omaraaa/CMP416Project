@@ -15,7 +15,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -39,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Users.findByPass", query = "SELECT u FROM Users u WHERE u.pass = :pass")
     , @NamedQuery(name = "Users.findByEmail", query = "SELECT u FROM Users u WHERE u.email = :email")
     , @NamedQuery(name = "Users.findByJoindate", query = "SELECT u FROM Users u WHERE u.joindate = :joindate")
+    , @NamedQuery(name = "Users.findByLogindate", query = "SELECT u FROM Users u WHERE u.logindate = :logindate")
     , @NamedQuery(name = "Users.findByCredits", query = "SELECT u FROM Users u WHERE u.credits = :credits")})
 public class Users implements Serializable {
 
@@ -60,20 +60,17 @@ public class Users implements Serializable {
     @Column(name = "JOINDATE")
     @Temporal(TemporalType.DATE)
     private Date joindate;
+    @Column(name = "LOGINDATE")
+    @Temporal(TemporalType.DATE)
+    private Date logindate;
     @Column(name = "CREDITS")
     private Integer credits;
-    @ManyToMany(mappedBy = "usersCollection")
-    private Collection<Posts> postsCollection;
-    @ManyToMany(mappedBy = "usersCollection")
-    private Collection<Streams> streamsCollection;
-    @ManyToMany(mappedBy = "usersCollection1")
-    private Collection<Streams> streamsCollection1;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "users")
     private Collection<Orders> ordersCollection;
     @OneToMany(mappedBy = "uid")
     private Collection<Comments> commentsCollection;
     @OneToMany(mappedBy = "uid")
-    private Collection<Posts> postsCollection1;
+    private Collection<Posts> postsCollection;
 
     public Users() {
     }
@@ -129,39 +126,20 @@ public class Users implements Serializable {
         this.joindate = joindate;
     }
 
+    public Date getLogindate() {
+        return logindate;
+    }
+
+    public void setLogindate(Date logindate) {
+        this.logindate = logindate;
+    }
+
     public Integer getCredits() {
         return credits;
     }
 
     public void setCredits(Integer credits) {
         this.credits = credits;
-    }
-
-    @XmlTransient
-    public Collection<Posts> getPostsCollection() {
-        return postsCollection;
-    }
-
-    public void setPostsCollection(Collection<Posts> postsCollection) {
-        this.postsCollection = postsCollection;
-    }
-
-    @XmlTransient
-    public Collection<Streams> getStreamsCollection() {
-        return streamsCollection;
-    }
-
-    public void setStreamsCollection(Collection<Streams> streamsCollection) {
-        this.streamsCollection = streamsCollection;
-    }
-
-    @XmlTransient
-    public Collection<Streams> getStreamsCollection1() {
-        return streamsCollection1;
-    }
-
-    public void setStreamsCollection1(Collection<Streams> streamsCollection1) {
-        this.streamsCollection1 = streamsCollection1;
     }
 
     @XmlTransient
@@ -183,12 +161,12 @@ public class Users implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Posts> getPostsCollection1() {
-        return postsCollection1;
+    public Collection<Posts> getPostsCollection() {
+        return postsCollection;
     }
 
-    public void setPostsCollection1(Collection<Posts> postsCollection1) {
-        this.postsCollection1 = postsCollection1;
+    public void setPostsCollection(Collection<Posts> postsCollection) {
+        this.postsCollection = postsCollection;
     }
 
     @Override

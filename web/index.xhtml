@@ -8,21 +8,129 @@
     </f:metadata>
 
     <h:head>
+        <input id="username" type="hidden" value="#{user.iusername}"/>
         <title>Bottle</title>
         <h:outputScript library="js" name="jquery-3.3.1.js" />
         <h:outputScript library="jquery-ui-1.12.1" name="jquery-ui.js"/>
         <h:outputStylesheet library="jquery-ui-1.12.1" name="jquery-ui.css"/>
         <script>
+            var pcount = 0;
+            var maxcount = 10;
+            var lastId = 0;
+                
             $(function () {
-                //$("#postdialog").dialog({width:'auto'});
-                //$("#postdialog2").dialog({width:'auto'});
-                //$(window).scroll(function () {
-                 //   $('#toph').css('top', $(this).scrollTop() + "px");
-                    
-                //});
-                $('#page').css('height', (window.innerHeight - $('#toph').innerHeight() - $('#toph').outerHeight())"" + 'px');
-            });
+                //alert($("page.pc").length)
 
+                updatePosts();
+                $("#more").on("click",function(){
+                        updatePosts();
+                });
+                $('#page').css('height', (window.innerHeight - $('#toph').innerHeight() - $('#toph').outerHeight()) + 'px');
+                $(".test").click(function (){
+                   alert("test"); 
+                });
+                $('.fav').click( function(){
+                    var parentid = $(this).parent().attr("id");
+                    $.ajax({
+                        type:"POST",
+                        url:"../PostAction",
+                        data:{
+                            "action":"fav",
+                            "user":"#{user.loggeduser.uid}",
+                            "postid":parentid
+                        }
+                    });
+                    $(this).hide();
+                });
+                $('.multi').click(function(){
+                    var parentid = $(this).parent().attr("id");
+                    $.ajax({
+                        type:"POST",
+                        url:"../PostAction",
+                        data:{
+                            "action":"mutli",
+                            "user":"#{user.iusername}",
+                            "postid":parentid
+                        }
+                    });
+                    $(this).hide();
+                });
+                $('.rem').click( function(){
+                    var parentid = $(this).parent().attr("id");
+                    $.ajax({
+                        type:"POST",
+                        url:"../PostAction",
+                        data:{
+                            "action":"rem",
+                            "user":"#{user.iusername}",
+                            "postid":parentid
+                        }
+                    });
+                    $(this).hide();
+                });
+            });
+            
+            function updatePosts(){
+                pcount = $(".pc").length;
+                if(maxcount > pcount) {
+                    $.ajax({
+                        type:"POST",
+                        url:"../PostGetter",
+                        data:{
+                            "count":maxcount-pcount,
+                            "lastid":lastId
+                        },
+                        success: appendPost
+                    });
+                }
+            }
+            
+            function appendPost(rt) {
+                $("#page").append(rt)
+                pcount = $(".pc").length;
+                lastId += pcount
+                
+                $('.fav').click( function(){
+                    var parentid = $(this).parent().attr("id");
+                    $.ajax({
+                        type:"POST",
+                        url:"../PostAction",
+                        data:{
+                            "action":"fav",
+                            "user":"#{user.loggeduser.uid}",
+                            "postid":parentid
+                        }
+                    });
+                    $(this).hide();
+                });
+                $('.multi').click(function(){
+                    var parentid = $(this).parent().attr("id");
+                    $.ajax({
+                        type:"POST",
+                        url:"../PostAction",
+                        data:{
+                            "action":"mutli",
+                            "user":"#{user.iusername}",
+                            "postid":parentid
+                        }
+                    });
+                    $(this).hide();
+                });
+                $('.rem').click( function(){
+                    var parentid = $(this).parent().attr("id");
+                    $.ajax({
+                        type:"POST",
+                        url:"../PostAction",
+                        data:{
+                            "action":"rem",
+                            "user":"#{user.iusername}",
+                            "postid":parentid
+                        }
+                    });
+                    $(this).hide();
+                });
+            }
+            
         </script>
         <style>
             #page {
@@ -37,164 +145,33 @@
         </style>
     </h:head>
     <h:body>
+        
         <div id="toph" align="center" class="ui-widget-header">
+
             <table>
                 <tr>
-                    <div id="post">
-                    </div>
+                    
                 </tr>
                 <tr>
+                    <td>
                     <h:form>
+                        <h:commandButton value="Buy Credits" action="credits"/>
                         <h:commandButton value="Logout" action="#{user.logout}"/>
                         <h:commandButton value="Create a new post" action="createpost"/>
                     </h:form>
+                    </td>
+                    <td align="right">
+                        <div align="right">
+                    credits:#{user.credits}
+                    </div>
+                    </td>
                 </tr>
             </table>
         </div>
         <div id="page">
-            <div  id="postdialog" title="Post Placeholder Title" >
-                <h1 class="ui-widget-header">Post Placeholder Title</h1>
-                <p class="ui-widget-content">Test Post Test Post Test Post Test<br/>
-                    Post Test Post Test Post Test Post Test Post<br/>
-                    Test Post Test Post Test Post Test Post<br/>
-                    Test Post Test Post<br/>
-                </p>
-                <input type="button" value="Favorite Post" id="fav"/>
 
-                <input type="button" value="Remove Post(-1)" id="rem"/>
-
-                <input type="button" value="Mutliply Post(-1)" id="multi"/>
-
-            </div>
-
-            
-            <div  id="postdialog" title="Post Placeholder Title" >
-                <h1 class="ui-widget-header">Post Placeholder Title</h1>
-                <p class="ui-widget-content">Test Post Test Post Test Post Test<br/>
-                    Post Test Post Test Post Test Post Test Post<br/>
-                    Test Post Test Post Test Post Test Post<br/>
-                    Test Post Test Post<br/>
-                </p>
-                <input type="button" value="Favorite Post" id="1"/>
-
-                <input type="button" value="Remove Post(-1)" id="1"/>
-
-                <input type="button" value="Mutliply Post(-1)" id="1"/>
-
-            </div>
-            <div  id="postdialog" title="Post Placeholder Title" >
-                <h1 class="ui-widget-header">Post Placeholder Title</h1>
-                <p class="ui-widget-content">Test Post Test Post Test Post Test<br/>
-                    Post Test Post Test Post Test Post Test Post<br/>
-                    Test Post Test Post Test Post Test Post<br/>
-                    Test Post Test Post<br/>
-                </p>
-                <input type="button" value="Favorite Post" id="fav"/>
-
-                <input type="button" value="Remove Post(-1)" id="rem"/>
-
-                <input type="button" value="Mutliply Post(-1)" id="multi"/>
-
-            </div>
-            <div  id="postdialog" title="Post Placeholder Title" >
-                <h1 class="ui-widget-header">Post Placeholder Title</h1>
-                <p class="ui-widget-content">Test Post Test Post Test Post Test<br/>
-                    Post Test Post Test Post Test Post Test Post<br/>
-                    Test Post Test Post Test Post Test Post<br/>
-                    Test Post Test Post<br/>
-                </p>
-                <input type="button" value="Favorite Post" id="fav"/>
-
-                <input type="button" value="Remove Post(-1)" id="rem"/>
-
-                <input type="button" value="Mutliply Post(-1)" id="multi"/>
-
-            </div>
-            <div  id="postdialog" title="Post Placeholder Title" >
-                <h1 class="ui-widget-header">Post Placeholder Title</h1>
-                <p class="ui-widget-content">Test Post Test Post Test Post Test<br/>
-                    Post Test Post Test Post Test Post Test Post<br/>
-                    Test Post Test Post Test Post Test Post<br/>
-                    Test Post Test Post<br/>
-                </p>
-                <input type="button" value="Favorite Post" id="fav"/>
-
-                <input type="button" value="Remove Post(-1)" id="rem"/>
-
-                <input type="button" value="Mutliply Post(-1)" id="multi"/>
-
-            </div>
-            <div  id="postdialog" title="Post Placeholder Title" >
-                <h1 class="ui-widget-header">Post Placeholder Title</h1>
-                <p class="ui-widget-content">Test Post Test Post Test Post Test<br/>
-                    Post Test Post Test Post Test Post Test Post<br/>
-                    Test Post Test Post Test Post Test Post<br/>
-                    Test Post Test Post<br/>
-                </p>
-                <input type="button" value="Favorite Post" id="fav"/>
-
-                <input type="button" value="Remove Post(-1)" id="rem"/>
-
-                <input type="button" value="Mutliply Post(-1)" id="multi"/>
-
-            </div>
-            <div  id="postdialog" title="Post Placeholder Title" >
-                <h1 class="ui-widget-header">Post Placeholder Title</h1>
-                <p class="ui-widget-content">Test Post Test Post Test Post Test<br/>
-                    Post Test Post Test Post Test Post Test Post<br/>
-                    Test Post Test Post Test Post Test Post<br/>
-                    Test Post Test Post<br/>
-                </p>
-                <input type="button" value="Favorite Post" id="fav"/>
-
-                <input type="button" value="Remove Post(-1)" id="rem"/>
-
-                <input type="button" value="Mutliply Post(-1)" id="multi"/>
-
-            </div>
-            <div  id="postdialog" title="Post Placeholder Title" >
-                <h1 class="ui-widget-header">Post Placeholder Title</h1>
-                <p class="ui-widget-content">Test Post Test Post Test Post Test<br/>
-                    Post Test Post Test Post Test Post Test Post<br/>
-                    Test Post Test Post Test Post Test Post<br/>
-                    Test Post Test Post<br/>
-                </p>
-                <input type="button" value="Favorite Post" id="fav"/>
-
-                <input type="button" value="Remove Post(-1)" id="rem"/>
-
-                <input type="button" value="Mutliply Post(-1)" id="multi"/>
-
-            </div>
-            <div  id="postdialog" title="Post Placeholder Title" >
-                <h1 class="ui-widget-header">Post Placeholder Title</h1>
-                <p class="ui-widget-content">Test Post Test Post Test Post Test<br/>
-                    Post Test Post Test Post Test Post Test Post<br/>
-                    Test Post Test Post Test Post Test Post<br/>
-                    Test Post Test Post<br/>
-                </p>
-                <input type="button" value="Favorite Post" id="fav"/>
-
-                <input type="button" value="Remove Post(-1)" id="rem"/>
-
-                <input type="button" value="Mutliply Post(-1)" id="multi"/>
-
-            </div>
-            <div  id="postdialog" title="Post Placeholder Title" >
-                <h1 class="ui-widget-header">Post Placeholder Title</h1>
-                <p class="ui-widget-content">Test Post Test Post Test Post Test<br/>
-                    Post Test Post Test Post Test Post Test Post<br/>
-                    Test Post Test Post Test Post Test Post<br/>
-                    Test Post Test Post<br/>
-                </p>
-                <input type="button" value="Favorite Post" id="fav"/>
-
-                <input type="button" value="Remove Post(-1)" id="rem"/>
-
-                <input type="button" value="Mutliply Post(-1)" id="multi"/>
-
-            </div>
         </div>
+        <input type="button" id="more" value="Get More Posts"/>
     </h:body>
 </html>
 

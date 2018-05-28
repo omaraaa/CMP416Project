@@ -16,8 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -40,9 +39,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Posts.findByPid", query = "SELECT p FROM Posts p WHERE p.pid = :pid")
     , @NamedQuery(name = "Posts.findByTitle", query = "SELECT p FROM Posts p WHERE p.title = :title")
     , @NamedQuery(name = "Posts.findByCreatetiondate", query = "SELECT p FROM Posts p WHERE p.createtiondate = :createtiondate")
-    , @NamedQuery(name = "Posts.findByTpid", query = "SELECT p FROM Posts p WHERE p.tpid = :tpid")
-    , @NamedQuery(name = "Posts.findByLpid", query = "SELECT p FROM Posts p WHERE p.lpid = :lpid")
-    , @NamedQuery(name = "Posts.findByIpid", query = "SELECT p FROM Posts p WHERE p.ipid = :ipid")})
+    , @NamedQuery(name = "Posts.findByTxt", query = "SELECT p FROM Posts p WHERE p.txt = :txt")
+    , @NamedQuery(name = "Posts.findByLnk", query = "SELECT p FROM Posts p WHERE p.lnk = :lnk")
+    , @NamedQuery(name = "Posts.findByRnd", query = "SELECT p FROM Posts p WHERE p.rnd = :rnd")})
 public class Posts implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,28 +55,17 @@ public class Posts implements Serializable {
     @Column(name = "CREATETIONDATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createtiondate;
-    @Column(name = "TPID")
-    private Integer tpid;
-    @Column(name = "LPID")
-    private Integer lpid;
-    @Column(name = "IPID")
-    private Integer ipid;
-    @JoinTable(name = "VIEWED", joinColumns = {
-        @JoinColumn(name = "PID", referencedColumnName = "PID")}, inverseJoinColumns = {
-        @JoinColumn(name = "UID", referencedColumnName = "UID")})
-    @ManyToMany
-    private Collection<Users> usersCollection;
-    @JoinTable(name = "SBMTS", joinColumns = {
-        @JoinColumn(name = "PID", referencedColumnName = "PID")}, inverseJoinColumns = {
-        @JoinColumn(name = "SID", referencedColumnName = "SID")})
-    @ManyToMany
-    private Collection<Streams> streamsCollection;
-    @OneToMany(mappedBy = "pid")
-    private Collection<Imageposts> imagepostsCollection;
+    @Column(name = "TXT")
+    private String txt;
+    @Column(name = "LNK")
+    private String lnk;
+    @Lob
+    @Column(name = "IMAGE")
+    private Serializable image;
+    @Column(name = "RND")
+    private Integer rnd;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "posts")
     private Collection<Comments> commentsCollection;
-    @OneToMany(mappedBy = "pid")
-    private Collection<Textposts> textpostsCollection;
     @JoinColumn(name = "UID", referencedColumnName = "UID")
     @ManyToOne
     private Users uid;
@@ -113,55 +101,36 @@ public class Posts implements Serializable {
         this.createtiondate = createtiondate;
     }
 
-    public Integer getTpid() {
-        return tpid;
+    public String getTxt() {
+        return txt;
     }
 
-    public void setTpid(Integer tpid) {
-        this.tpid = tpid;
+    public void setTxt(String txt) {
+        this.txt = txt;
     }
 
-    public Integer getLpid() {
-        return lpid;
+    public String getLnk() {
+        return lnk;
     }
 
-    public void setLpid(Integer lpid) {
-        this.lpid = lpid;
+    public void setLnk(String lnk) {
+        this.lnk = lnk;
     }
 
-    public Integer getIpid() {
-        return ipid;
+    public Serializable getImage() {
+        return image;
     }
 
-    public void setIpid(Integer ipid) {
-        this.ipid = ipid;
+    public void setImage(Serializable image) {
+        this.image = image;
     }
 
-    @XmlTransient
-    public Collection<Users> getUsersCollection() {
-        return usersCollection;
+    public Integer getRnd() {
+        return rnd;
     }
 
-    public void setUsersCollection(Collection<Users> usersCollection) {
-        this.usersCollection = usersCollection;
-    }
-
-    @XmlTransient
-    public Collection<Streams> getStreamsCollection() {
-        return streamsCollection;
-    }
-
-    public void setStreamsCollection(Collection<Streams> streamsCollection) {
-        this.streamsCollection = streamsCollection;
-    }
-
-    @XmlTransient
-    public Collection<Imageposts> getImagepostsCollection() {
-        return imagepostsCollection;
-    }
-
-    public void setImagepostsCollection(Collection<Imageposts> imagepostsCollection) {
-        this.imagepostsCollection = imagepostsCollection;
+    public void setRnd(Integer rnd) {
+        this.rnd = rnd;
     }
 
     @XmlTransient
@@ -171,15 +140,6 @@ public class Posts implements Serializable {
 
     public void setCommentsCollection(Collection<Comments> commentsCollection) {
         this.commentsCollection = commentsCollection;
-    }
-
-    @XmlTransient
-    public Collection<Textposts> getTextpostsCollection() {
-        return textpostsCollection;
-    }
-
-    public void setTextpostsCollection(Collection<Textposts> textpostsCollection) {
-        this.textpostsCollection = textpostsCollection;
     }
 
     public Users getUid() {

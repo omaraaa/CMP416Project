@@ -5,6 +5,7 @@
  */
 package servlets;
 
+import db.Posts;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.persistence.EntityManager;
@@ -36,25 +37,33 @@ public class PostAction extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        String action = request.getParameter("action");
+        int uid = Integer.parseInt(request.getParameter("user"));
+        int postid = Integer.parseInt(request.getParameter("postid"));
+        
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("CMP416ProjectPU");
         EntityManager em = emf.createEntityManager();
         
-        Query q = em.createQuery("select * from posts A join");
-        
-        
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet PostAction</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet PostAction at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        if(action.equals("fav")) {
+            Query q = em.createNativeQuery("insert into favs (uid,pid) values (:uid, :pid)");
+            q.setParameter("uid", uid);
+            q.setParameter("pid", postid);
+            q.executeUpdate();
         }
+        em.getTransaction().begin();
+        
+        if(action.equals("multi")) {
+            Query q = em.createNamedQuery("Posts.findByPid");
+            Posts p = (Posts) q.getSingleResult();
+            p.setRnd(p.getRnd()+1);
+        }
+        
+        if(action.equals("rem")) {
+            Query q = em.createNamedQuery("Posts.findByPid");
+            Posts p = (Posts) q.getSingleResult();
+            p.setRnd(p.getRnd()-1);
+        }
+        em.getTransaction().commit();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

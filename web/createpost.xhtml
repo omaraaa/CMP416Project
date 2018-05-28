@@ -22,7 +22,6 @@
             <ul>
                 <li><a href="#textpt">Text</a></li>
                 <li><a href="#linkpt">Link</a></li>
-                <li><a href="#imagept">Image</a></li>
             </ul>
             <div id="textpt" style="display: block; overflow: hidden">
                 <h:form>
@@ -38,11 +37,9 @@
                         Title:
                         <h:inputText value="#{user.title}" style="width: 100%; box-sizing: border-box"/>
                         Link:
-                        <h:inputText value="#{user.ptext}" style="width: 100%; box-sizing: border-box"/>
+                        <h:inputText value="#{user.ltext}" style="width: 100%; box-sizing: border-box"/>
                     <h:commandButton value="Submit" action="#{user.submit()}"/>
                 </h:form>
-            </div>
-            <div id="imagept">
             </div>
         </div>
         <a href="index.xhtml">back</a>   

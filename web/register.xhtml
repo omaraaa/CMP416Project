@@ -39,7 +39,7 @@
                     Retype Password:
                     <h:inputSecret id="pass2"/>
                 </h:panelGrid>
-                <c:if test="#{user.failed}">
+                <c:if test="#{user.ufailed}">
                     <h:outputText value="Username already used" class="error"/><br/>
                 </c:if>
                 <c:if test="#{user.efailed}">
